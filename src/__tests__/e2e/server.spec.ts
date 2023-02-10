@@ -1,7 +1,7 @@
 import supertest from "supertest";
 import { describe, expect, it } from "vitest";
 
-import { app } from "../src/shared/infra/http/app";
+import { app } from "@/shared/infra/http/app";
 
 describe("Test [1]", () => {
   it("1 + 1", async () => {
