@@ -1,8 +1,8 @@
 // Packages
 import { defineConfig } from "tsup";
 
-// [TODO]: Fix .spec files to not build
 export default defineConfig({
+  tsconfig: "./tsconfig.build.json",
   clean: true,
   minify: true,
   target: "es2022",
