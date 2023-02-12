@@ -19,7 +19,8 @@ describe("[POST] - Create user", () => {
       });
 
     expect(response.status).toBe(201);
-    expect(response.noContent).toBeTruthy();
+    expect(response.text).toBeFalsy();
+    expect(response.body).toEqual({});
   });
 
   it("[/user] - should not be able to create a new user with same email", async () => {
