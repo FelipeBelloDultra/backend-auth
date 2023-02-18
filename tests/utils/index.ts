@@ -2,11 +2,10 @@
 import { faker } from "@faker-js/faker";
 
 // Entities
-import { IUserEntity } from "@/modules/users/entities/user-entity";
+import { ICreateUserDTO } from "@/modules/users/dtos/create-user-dto";
 
-export function createUserFactory(): IUserEntity {
+export function createUserFactory(): ICreateUserDTO {
   return {
-    _id: faker.datatype.uuid(),
     name: faker.name.fullName(),
     email: faker.internet.email(),
     password: faker.internet.password(),

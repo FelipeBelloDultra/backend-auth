@@ -8,7 +8,6 @@ import { IUserEntity } from "../entities/user-entity";
 import { Either, left, right } from "@/shared/errors/either";
 
 interface ICreateUserRequest {
-  _id: string;
   name: string;
   email: string;
   password: string;

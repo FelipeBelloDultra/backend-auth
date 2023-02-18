@@ -11,12 +11,11 @@ const fakeUserRepository = new FakeUserRepository();
 
 export class UserController {
   public async create(req: IRequest, res: IResponse): Promise<IResponse> {
-    const { _id, name, email, password } = req.body;
+    const { name, email, password } = req.body;
 
     const createUser = new CreateUser(fakeUserRepository);
 
     const result = await createUser.execute({
-      _id,
       name,
       email,
       password,

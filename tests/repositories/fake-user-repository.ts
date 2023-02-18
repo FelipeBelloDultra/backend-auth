@@ -1,3 +1,6 @@
+// Packages
+import { randomUUID } from "node:crypto";
+
 // Interfaces
 import { IUserRepository } from "@/modules/users/repositories/user-repository";
 
@@ -13,7 +16,7 @@ export class FakeUserRepository implements IUserRepository {
   public async create(data: ICreateUserDTO): Promise<IUserEntity> {
     const users = data;
 
-    this.users = [...this.users, users];
+    this.users.push({ ...users, _id: randomUUID() });
 
     return users;
   }
