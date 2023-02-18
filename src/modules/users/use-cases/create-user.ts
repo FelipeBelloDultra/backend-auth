@@ -15,6 +15,14 @@ export class CreateUser {
   constructor(private readonly userRepository: IUserRepository) {}
 
   public async execute(data: ICreateUserRequest): Promise<IUserEntity> {
+    const findedUserByEmail = await this.userRepository.findByEmail(data.email);
+
+    if (findedUserByEmail) {
+      console.log(findedUserByEmail);
+
+      console.log("Email already exists");
+    }
+
     const createdUser = await this.userRepository.create(data);
 
     return createdUser;
