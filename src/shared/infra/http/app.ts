@@ -1,9 +1,15 @@
+// Config
+import "reflect-metadata";
+
 // Packages
 import express from "express";
 import cors from "cors";
 
 // Routes
 import { apiRouter } from "./routes";
+
+// Dependency injection
+import "../../container";
 
 const app = express();
 

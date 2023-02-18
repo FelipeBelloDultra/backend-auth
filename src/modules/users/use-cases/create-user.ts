@@ -1,3 +1,6 @@
+// Packages
+import { injectable, inject } from "tsyringe";
+
 // Interfaces
 import { IUserRepository } from "../repositories/user-repository";
 
@@ -15,8 +18,12 @@ interface ICreateUserRequest {
 
 type Response = Either<Error, IUserEntity>;
 
+@injectable()
 export class CreateUser {
-  constructor(private readonly userRepository: IUserRepository) {}
+  constructor(
+    @inject("UserRepository")
+    private readonly userRepository: IUserRepository
+  ) {}
 
   public async execute(data: ICreateUserRequest): Promise<Response> {
     const findedUserByEmail = await this.userRepository.findByEmail(data.email);
