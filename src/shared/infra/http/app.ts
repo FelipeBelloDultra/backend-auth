@@ -1,5 +1,6 @@
 // Config
 import "reflect-metadata";
+import "dotenv/config";
 
 // Packages
 import express from "express";
