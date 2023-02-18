@@ -5,8 +5,11 @@ import { faker } from "@faker-js/faker";
 import { ICreateUserDTO } from "@/modules/users/dtos/create-user-dto";
 
 export function createUserFactory(): ICreateUserDTO {
+  const name = faker.name.fullName();
+
   return {
-    name: faker.name.fullName(),
+    name,
+    username: faker.internet.userName(name),
     email: faker.internet.email(),
     password: faker.internet.password(),
   };

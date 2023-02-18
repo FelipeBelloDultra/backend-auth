@@ -14,11 +14,16 @@ export class FakeUserRepository implements IUserRepository {
   private users: IUserEntity[] = [];
 
   public async create(data: ICreateUserDTO): Promise<IUserEntity> {
-    const users = data;
+    const newUser: IUserEntity = {
+      ...data,
+      id_user: randomUUID(),
+      created_at: new Date(),
+      updated_at: new Date(),
+    };
 
-    this.users.push({ ...users, id: randomUUID() });
+    this.users.push(newUser);
 
-    return users;
+    return newUser;
   }
 
   public async findByEmail(email: string): Promise<IUserEntity | undefined> {

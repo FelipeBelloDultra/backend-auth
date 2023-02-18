@@ -1,6 +1,4 @@
-export interface IUserEntity {
-  id?: string;
-  name: string;
-  email: string;
-  password: string;
-}
+// Interfaces
+import { User as IUser } from "@prisma/client";
+
+export type IUserEntity = IUser;
