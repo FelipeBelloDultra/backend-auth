@@ -9,7 +9,6 @@ export function createUserFactory(): ICreateUserDTO {
 
   return {
     name,
-    username: faker.internet.userName(name),
     email: faker.internet.email(),
     password: faker.internet.password(),
   };

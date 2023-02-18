@@ -16,6 +16,7 @@ export class FakeUserRepository implements IUserRepository {
   public async create(data: ICreateUserDTO): Promise<IUserEntity> {
     const newUser: IUserEntity = {
       ...data,
+      username: null,
       id_user: randomUUID(),
       created_at: new Date(),
       updated_at: new Date(),

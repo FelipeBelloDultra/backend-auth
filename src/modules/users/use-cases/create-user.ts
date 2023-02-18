@@ -9,7 +9,6 @@ import { Either, left, right } from "@/shared/errors/either";
 
 interface ICreateUserRequest {
   name: string;
-  username: string;
   email: string;
   password: string;
 }
