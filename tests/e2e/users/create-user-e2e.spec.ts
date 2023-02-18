@@ -27,7 +27,7 @@ describe("[POST] - Create user", () => {
     const USER_1 = createUserFactory();
     const USER_2 = createUserFactory();
 
-    supertest(app)
+    await supertest(app)
       .post("/api/user")
       .send({
         ...USER_1,
