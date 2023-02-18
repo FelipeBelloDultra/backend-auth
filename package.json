@@ -8,8 +8,11 @@
     "dev": "tsx src/server.ts",
     "dev:watch": "tsx watch src/server.ts",
     "test": "vitest",
-    "test:coverage": "vitest run --coverage",
+    "test:coverage": "vitest ./tests/units/* run --coverage",
     "test:ui": "vitest --ui",
+    "test:e2e": "vitest ./tests/e2e/*",
+    "test:all": "vitest ./tests/*",
+    "test:units": "vitest ./tests/units/*",
     "db:migrate:dev": "prisma migrate dev",
     "db:studio": "prisma studio"
   },
