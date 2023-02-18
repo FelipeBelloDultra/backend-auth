@@ -10,7 +10,7 @@
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "db:migrate:dev": " prisma migrate dev",
+    "db:migrate:dev": "prisma migrate dev",
     "db:studio": "prisma studio"
   },
   "keywords": [],
