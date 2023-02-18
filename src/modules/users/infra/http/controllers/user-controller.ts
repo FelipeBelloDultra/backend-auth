@@ -5,15 +5,15 @@ import { IRequest, IResponse } from "@/shared/interfaces/http";
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
 // Repositories
-import { FakeUserRepository } from "../../../../../../tests/repositories/fake-user-repository";
+import { UserRepository } from "../../../infra/database/repositories/user-repository";
 
-const fakeUserRepository = new FakeUserRepository();
+const userRepository = new UserRepository();
 
 export class UserController {
   public async create(req: IRequest, res: IResponse): Promise<IResponse> {
     const { name, email, password } = req.body;
 
-    const createUser = new CreateUser(fakeUserRepository);
+    const createUser = new CreateUser(userRepository);
 
     const result = await createUser.execute({
       name,
