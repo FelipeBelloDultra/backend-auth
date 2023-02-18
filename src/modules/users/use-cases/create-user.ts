@@ -4,6 +4,9 @@ import { IUserRepository } from "../repositories/user-repository";
 // Entities
 import { IUserEntity } from "../entities/user-entity";
 
+// Errors
+import { Either, left, right } from "@/shared/errors/either";
+
 interface ICreateUserRequest {
   _id: string;
   name: string;
@@ -11,20 +14,20 @@ interface ICreateUserRequest {
   password: string;
 }
 
+type Response = Either<Error, IUserEntity>;
+
 export class CreateUser {
   constructor(private readonly userRepository: IUserRepository) {}
 
-  public async execute(data: ICreateUserRequest): Promise<IUserEntity> {
+  public async execute(data: ICreateUserRequest): Promise<Response> {
     const findedUserByEmail = await this.userRepository.findByEmail(data.email);
 
     if (findedUserByEmail) {
-      console.log(findedUserByEmail);
-
-      console.log("Email already exists");
+      return left(new Error("Email already exists"));
     }
 
     const createdUser = await this.userRepository.create(data);
 
-    return createdUser;
+    return right(createdUser);
   }
 }
