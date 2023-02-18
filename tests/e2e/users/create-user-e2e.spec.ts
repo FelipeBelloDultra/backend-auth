@@ -6,11 +6,11 @@ import { describe, expect, it } from "vitest";
 import { app } from "@/shared/infra/http/app";
 
 // Utils
-import { createUserFactorie } from "../../utils";
+import { createUserFactory } from "../../utils";
 
 describe("[POST] - Create user", () => {
   it("[/user] - should be able to create a new user", async () => {
-    const USER = createUserFactorie();
+    const USER = createUserFactory();
 
     const response = await supertest(app)
       .post("/api/user")
@@ -24,8 +24,8 @@ describe("[POST] - Create user", () => {
   });
 
   it("[/user] - should not be able to create a new user with same email", async () => {
-    const USER_1 = createUserFactorie();
-    const USER_2 = createUserFactorie();
+    const USER_1 = createUserFactory();
+    const USER_2 = createUserFactory();
 
     supertest(app)
       .post("/api/user")
