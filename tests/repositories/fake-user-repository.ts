@@ -16,7 +16,7 @@ export class FakeUserRepository implements IUserRepository {
   public async create(data: ICreateUserDTO): Promise<IUserEntity> {
     const users = data;
 
-    this.users.push({ ...users, _id: randomUUID() });
+    this.users.push({ ...users, id: randomUUID() });
 
     return users;
   }
