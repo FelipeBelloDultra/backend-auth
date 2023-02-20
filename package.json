@@ -8,7 +8,7 @@
     "dev": "tsx src/server.ts",
     "dev:watch": "tsx watch src/server.ts",
     "test": "vitest",
-    "test:coverage": "vitest ./tests/units/* run --coverage",
+    "test:coverage": "dotenv -e .env.test -- vitest ./tests/units/* run --coverage",
     "test:ui": "dotenv -e .env.test -- vitest --ui",
     "test:e2e": "dotenv -e .env.test -- vitest ./tests/e2e/*",
     "test:all": "dotenv -e .env.test -- vitest ./tests/*",
