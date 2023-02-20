@@ -4,17 +4,10 @@ import { container } from "tsyringe";
 // Interfaces
 import { IRequest, IResponse } from "@/shared/interfaces/http";
 
-// Base Controller
-import { BaseController } from "@/shared/infra/http/controllers/base-controller";
-
 // Use Cases
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
-export class UserController extends BaseController {
-  constructor() {
-    super();
-  }
-
+export class UserController {
   public async create(req: IRequest, res: IResponse): Promise<IResponse> {
     const { name, email, password } = req.body;
 
@@ -27,9 +20,12 @@ export class UserController extends BaseController {
     });
 
     if (result.isLeft()) {
-      return this.responseWithError(res, 422, result.value);
+      return res.status(result.value.statusCode).json({
+        error: result.value,
+        data: null,
+      });
     }
 
-    return this.responseCreated(res);
+    return res.status(201).send();
   }
 }
