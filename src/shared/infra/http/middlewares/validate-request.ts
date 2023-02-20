@@ -1,20 +1,7 @@
 // Interfaces
 import { INextFunction, IRequest, IResponse } from "@/shared/interfaces/http";
 import { IErrorsStack } from "@/shared/interfaces/errors";
-
-interface IValidationSchemaValues {
-  required?: boolean | string;
-  min?: number;
-  max?: number;
-  regex?: {
-    value: RegExp;
-    message: string;
-  };
-}
-
-interface ISchema {
-  [key: string]: IValidationSchemaValues;
-}
+import { ISchema } from "@/shared/interfaces/schemas";
 
 export function validateRequest(schema: ISchema) {
   return (req: IRequest, res: IResponse, next: INextFunction) => {
