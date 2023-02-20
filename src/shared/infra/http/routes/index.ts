@@ -2,7 +2,7 @@
 import { Router } from "express";
 
 // Routes
-import { userRouter } from "@/modules/users/infra/http/routes/users-routes";
+import { userRouter } from "@/modules/users/infra/http/routes";
 
 const apiRouter = Router();
 
