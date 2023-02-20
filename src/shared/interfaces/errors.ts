@@ -1,7 +1,5 @@
 export interface IErrorsStack {
-  [key: string]: {
-    message: string;
-  };
+  [key: string]: string[];
 }
 
 export interface IHttpError {
