@@ -1,12 +1,15 @@
 // Packages
 import supertest from "supertest";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, afterAll } from "vitest";
 
 // Http
 import { app } from "@/shared/infra/http/app";
 
-// Utils
-import { createUserFactory } from "../../utils";
+// Database
+import { prisma } from "@/shared/infra/database";
+
+// Factories
+import { createUserFactory } from "../../factories";
 
 describe("[POST] - Create user", () => {
   it("[/user] - should be able to create a new user", async () => {
@@ -43,4 +46,8 @@ describe("[POST] - Create user", () => {
     expect(response.status).toBe(422);
     expect(response.body).toHaveProperty("error");
   });
+});
+
+afterAll(async () => {
+  await prisma.user.deleteMany();
 });

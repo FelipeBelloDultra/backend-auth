@@ -6,10 +6,10 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
 // Fake repositories
-import { FakeUserRepository } from "../../repositories/fake-user-repository";
+import { FakeUserRepository } from "../../../repositories/fake-user-repository";
 
-// Utils
-import { createUserFactory } from "../../utils";
+// Factories
+import { createUserFactory } from "../../../factories";
 
 describe("[UseCase] - Create User", () => {
   let createUser: CreateUser;
