@@ -5,6 +5,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 // Use cases
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
+// Errors
+import { UsedEmail } from "@/modules/users/errors/used-email";
+
 // Fakes
 import { FakeUserRepository } from "../../../mocks/repositories/fake-user-repository";
 import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
@@ -46,7 +49,6 @@ describe("[UseCase] - Create User", () => {
     });
 
     expect(result.isLeft()).toEqual(true);
-    expect(result.value.name).toBe("Error");
-    expect(result.value).toBeInstanceOf(Error);
+    expect(result.value).toBeInstanceOf(UsedEmail);
   });
 });
