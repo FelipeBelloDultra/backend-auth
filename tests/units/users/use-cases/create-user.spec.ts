@@ -5,8 +5,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 // Use cases
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
-// Fake repositories
+// Fakes
 import { FakeUserRepository } from "../../../repositories/fake-user-repository";
+import { FakeHashProvider } from "../../../providers/fake-hash-provider";
 
 // Factories
 import { createUserFactory } from "../../../factories";
@@ -14,11 +15,13 @@ import { createUserFactory } from "../../../factories";
 describe("[UseCase] - Create User", () => {
   let createUser: CreateUser;
   let fakeUserRepository: FakeUserRepository;
+  let fakeHashProvider: FakeHashProvider;
 
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
+    fakeHashProvider = new FakeHashProvider();
 
-    createUser = new CreateUser(fakeUserRepository);
+    createUser = new CreateUser(fakeUserRepository, fakeHashProvider);
   });
 
   it("should be able to create a new user", async () => {

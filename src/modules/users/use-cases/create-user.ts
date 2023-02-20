@@ -3,6 +3,7 @@ import { injectable, inject } from "tsyringe";
 
 // Interfaces
 import { IUserRepository } from "../repositories/user-repository";
+import { IHashProvider } from "@/shared/container/providers/hash-provider";
 
 // Entities
 import { IUserEntity } from "../entities/user-entity";
@@ -22,7 +23,10 @@ type Response = Either<Error, IUserEntity>;
 export class CreateUser {
   constructor(
     @inject("UserRepository")
-    private readonly userRepository: IUserRepository
+    private readonly userRepository: IUserRepository,
+
+    @inject("HashProvider")
+    private readonly hashProvider: IHashProvider
   ) {}
 
   public async execute(data: ICreateUserRequest): Promise<Response> {
@@ -32,7 +36,13 @@ export class CreateUser {
       return left(new Error("Email already exists"));
     }
 
-    const createdUser = await this.userRepository.create(data);
+    const newPassword = await this.hashProvider.encodePassword(data.password);
+
+    const createdUser = await this.userRepository.create({
+      name: data.name,
+      email: data.email,
+      password: newPassword,
+    });
 
     return right(createdUser);
   }
