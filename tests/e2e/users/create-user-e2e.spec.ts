@@ -45,6 +45,7 @@ describe("[POST] - Create user", () => {
 
     expect(response.status).toBe(422);
     expect(response.body).toHaveProperty("error");
+    expect(response.body.error.errors).toHaveProperty("email");
   });
 });
 
