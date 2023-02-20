@@ -3,7 +3,7 @@ import { injectable, inject } from "tsyringe";
 
 // Interfaces
 import { IUserRepository } from "../repositories/user-repository";
-import { IHashProvider } from "@/shared/container/providers/hash-provider";
+import { IHashProvider } from "@/shared/providers/hash-provider";
 
 // Entities
 import { IUserEntity } from "../entities/user-entity";
