@@ -2,7 +2,7 @@
 import { describe, expect, it } from "vitest";
 
 // Fakes
-import { FakeHashProvider } from "../../providers/fake-hash-provider";
+import { FakeHashProvider } from "../../mocks/providers/fake-hash-provider";
 
 const fakeHashProvider = new FakeHashProvider();
 

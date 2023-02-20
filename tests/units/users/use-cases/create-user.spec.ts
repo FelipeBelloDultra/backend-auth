@@ -6,8 +6,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { CreateUser } from "@/modules/users/use-cases/create-user";
 
 // Fakes
-import { FakeUserRepository } from "../../../repositories/fake-user-repository";
-import { FakeHashProvider } from "../../../providers/fake-hash-provider";
+import { FakeUserRepository } from "../../../mocks/repositories/fake-user-repository";
+import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
 
 // Factories
 import { createUserFactory } from "../../../factories";
