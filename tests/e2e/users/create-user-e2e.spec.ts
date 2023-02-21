@@ -9,14 +9,16 @@ import { app } from "@/shared/infra/http/app";
 import { prisma } from "@/shared/infra/database";
 
 // Factories
-import { createUserFactory } from "../../factories";
+import { createUserFactory, createEmailFactory } from "../../factories";
+
+const BASE_URL = "/api/user";
 
 describe("[POST] - Create user", () => {
   it("[/user] - should be able to create a new user", async () => {
     const USER = createUserFactory();
 
     const response = await supertest(app)
-      .post("/api/user")
+      .post(BASE_URL)
       .send({
         ...USER,
       });
@@ -31,13 +33,13 @@ describe("[POST] - Create user", () => {
     const USER_2 = createUserFactory();
 
     await supertest(app)
-      .post("/api/user")
+      .post(BASE_URL)
       .send({
         ...USER_1,
       });
 
     const response = await supertest(app)
-      .post("/api/user")
+      .post(BASE_URL)
       .send({
         ...USER_2,
         email: USER_1.email,
@@ -46,6 +48,20 @@ describe("[POST] - Create user", () => {
     expect(response.status).toBe(422);
     expect(response.body).toHaveProperty("error");
     expect(response.body.error.errors).toHaveProperty("email");
+  });
+
+  it("[/user] - should not be able to create a new user with invalid fields", async () => {
+    const { status, body } = await supertest(app).post(BASE_URL).send({
+      name: "",
+      email: createEmailFactory(),
+      password: "",
+    });
+
+    expect(status).toBe(422);
+    expect(body).toHaveProperty("error");
+    expect(body.error.errors).toHaveProperty("name");
+    expect(body.error.errors).toHaveProperty("password");
+    expect(body.error.errors).not.toHaveProperty("email");
   });
 });
 
