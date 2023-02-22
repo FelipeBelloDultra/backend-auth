@@ -30,7 +30,9 @@ export class SessionController {
     }
 
     return BaseController.responseWithJSON(res, {
-      data: result,
+      data: {
+        token: result.value,
+      },
       statusCode: 200,
     });
   }

@@ -1,5 +1,6 @@
 // Packages
 import { injectable, inject } from "tsyringe";
+import { sign } from "jsonwebtoken";
 
 // Interfaces
 import { IUserRepository } from "../repositories/user-repository";
@@ -8,6 +9,9 @@ import { IHashProvider } from "@/shared/providers/hash-provider";
 // Errors
 import { Either, left, right } from "@/shared/errors/either";
 import { UnauthorizedSession } from "../errors/unauthorized-session";
+
+// Config
+import authConfig from "@/config/auth";
 
 interface IAuthenticateUserRequest {
   email: string;
@@ -44,6 +48,21 @@ export class AuthenticateUser {
       return left(new UnauthorizedSession());
     }
 
-    return right("HELLO");
+    const { secret, expiresIn } = authConfig;
+
+    const token = sign(
+      {
+        name: findedUserByEmail?.name,
+        email: findedUserByEmail?.email,
+        username: findedUserByEmail?.username,
+      },
+      secret,
+      {
+        subject: findedUserByEmail?.id_user,
+        expiresIn,
+      }
+    );
+
+    return right(token);
   }
 }
