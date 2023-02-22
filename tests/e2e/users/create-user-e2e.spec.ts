@@ -15,13 +15,9 @@ const BASE_URL = "/api/user";
 
 describe("[POST] - Create user", () => {
   it("[/user] - should be able to create a new user", async () => {
-    const USER = createUserFactory();
+    const createFirstUser = createUserFactory();
 
-    const response = await supertest(app)
-      .post(BASE_URL)
-      .send({
-        ...USER,
-      });
+    const response = await supertest(app).post(BASE_URL).send(createFirstUser);
 
     expect(response.status).toBe(201);
     expect(response.text).toBeFalsy();
@@ -29,20 +25,16 @@ describe("[POST] - Create user", () => {
   });
 
   it("[/user] - should not be able to create a new user with same email", async () => {
-    const USER_1 = createUserFactory();
-    const USER_2 = createUserFactory();
+    const createFirstUser = createUserFactory();
+    const createSecondUser = createUserFactory();
 
-    await supertest(app)
-      .post(BASE_URL)
-      .send({
-        ...USER_1,
-      });
+    await supertest(app).post(BASE_URL).send(createFirstUser);
 
     const response = await supertest(app)
       .post(BASE_URL)
       .send({
-        ...USER_2,
-        email: USER_1.email,
+        ...createSecondUser,
+        email: createFirstUser.email,
       });
 
     expect(response.status).toBe(422);
