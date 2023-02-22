@@ -66,6 +66,39 @@ describe("[POST] - Create session", () => {
     expect(body.error.errors).toHaveProperty("email");
     expect(body.error.errors).toHaveProperty("password");
   });
+
+  it("[/session/me] - should be able to show logged user", async () => {
+    const { body } = await supertest(app).post(BASE_URL).send({
+      email: createdUser.email,
+      password: createdUser.password,
+    });
+
+    const { token } = body.data;
+
+    const response = await supertest(app)
+      .post(`${BASE_URL}/me`)
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty("data");
+    expect(response.body.data).toHaveProperty("id_user");
+  });
+
+  it("[/session/me] - should not be able to show logged user if the bearer token is empty", async () => {
+    const response = await supertest(app).post(`${BASE_URL}/me`);
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("error");
+  });
+
+  it("[/session/me] - should not be able to show logged user if the bearer token is wrong", async () => {
+    const response = await supertest(app)
+      .post(`${BASE_URL}/me`)
+      .set("Authorization", "Bearer WRONG-BEARER-TOKEN");
+
+    expect(response.status).toBe(401);
+    expect(response.body).toHaveProperty("error");
+  });
 });
 
 afterAll(async () => {
