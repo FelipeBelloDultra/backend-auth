@@ -11,36 +11,55 @@ import { FakeUserRepository } from "../../../mocks/repositories/fake-user-reposi
 import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
 
 // Factories
-import { createUserFactory } from "../../../factories";
+import {
+  createUserFactory,
+  createEmailFactory,
+  createPasswordFactory,
+} from "../../../factories";
 
 describe("[UseCase] - Create Session", () => {
-  let createUser: CreateUser;
-  let createSession: CreateSession;
-
-  let fakeUserRepository: FakeUserRepository;
-  let fakeHashProvider: FakeHashProvider;
-
   const createdUser = createUserFactory();
 
+  const fakeUserRepository = new FakeUserRepository();
+  const fakeHashProvider = new FakeHashProvider();
+
+  const createUser = new CreateUser(fakeUserRepository, fakeHashProvider);
+
+  let createSession: CreateSession;
+
   beforeEach(() => {
-    createSession = new CreateSession();
+    createSession = new CreateSession(fakeUserRepository, fakeHashProvider);
   });
 
   beforeAll(async () => {
-    fakeUserRepository = new FakeUserRepository();
-    fakeHashProvider = new FakeHashProvider();
-
-    createUser = new CreateUser(fakeUserRepository, fakeHashProvider);
-
     await createUser.execute(createdUser);
   });
 
-  it("should not be able to create a new session", async () => {
-    await expect(
-      createSession.execute({
-        email: createdUser.email,
-        password: createdUser.password,
-      })
-    ).resolves.toBe("fail");
+  it("should be able to create a new session", async () => {
+    const result = await createSession.execute({
+      email: createdUser.email,
+      password: createdUser.password,
+    });
+
+    expect(result.isRight()).toBe(true);
+    expect(result.value).toBeTypeOf("string");
+  });
+
+  it("should not be to create a new session if wrong email", async () => {
+    const result = await createSession.execute({
+      email: createEmailFactory(),
+      password: createdUser.password,
+    });
+
+    expect(result.isLeft()).toBeTruthy();
+  });
+
+  it("should not be to create a new session if wrong password", async () => {
+    const result = await createSession.execute({
+      email: createdUser.password,
+      password: createPasswordFactory(),
+    });
+
+    expect(result.isLeft()).toBeTruthy();
   });
 });
