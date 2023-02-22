@@ -9,7 +9,7 @@ import { IHashProvider } from "@/shared/providers/hash-provider";
 import { Either, left, right } from "@/shared/errors/either";
 import { UnauthorizedSession } from "../errors/unauthorized-session";
 
-interface ICreateSessionRequest {
+interface IAuthenticateUserRequest {
   email: string;
   password: string;
 }
@@ -17,7 +17,7 @@ interface ICreateSessionRequest {
 type Response = Either<UnauthorizedSession, string>;
 
 @injectable()
-export class CreateSession {
+export class AuthenticateUser {
   constructor(
     @inject("UserRepository")
     private readonly userRepository: IUserRepository,
@@ -26,7 +26,7 @@ export class CreateSession {
     private readonly hashProvider: IHashProvider
   ) {}
 
-  public async execute(data: ICreateSessionRequest): Promise<Response> {
+  public async execute(data: IAuthenticateUserRequest): Promise<Response> {
     let userWasFinded = true;
 
     const findedUserByEmail = await this.userRepository.findByEmail(data.email);

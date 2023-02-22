@@ -4,7 +4,7 @@ import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 // Use cases
 import { CreateUser } from "@/modules/users/use-cases/create-user";
-import { CreateSession } from "@/modules/users/use-cases/create-session";
+import { AuthenticateUser } from "@/modules/users/use-cases/authenticate-user";
 
 // Fakes
 import { FakeUserRepository } from "../../../mocks/repositories/fake-user-repository";
@@ -25,10 +25,13 @@ describe("[UseCase] - Create Session", () => {
 
   const createUser = new CreateUser(fakeUserRepository, fakeHashProvider);
 
-  let createSession: CreateSession;
+  let authenticateUser: AuthenticateUser;
 
   beforeEach(() => {
-    createSession = new CreateSession(fakeUserRepository, fakeHashProvider);
+    authenticateUser = new AuthenticateUser(
+      fakeUserRepository,
+      fakeHashProvider
+    );
   });
 
   beforeAll(async () => {
@@ -36,7 +39,7 @@ describe("[UseCase] - Create Session", () => {
   });
 
   it("should be able to create a new session", async () => {
-    const result = await createSession.execute({
+    const result = await authenticateUser.execute({
       email: createdUser.email,
       password: createdUser.password,
     });
@@ -46,7 +49,7 @@ describe("[UseCase] - Create Session", () => {
   });
 
   it("should not be to create a new session if wrong email", async () => {
-    const result = await createSession.execute({
+    const result = await authenticateUser.execute({
       email: createEmailFactory(),
       password: createdUser.password,
     });
@@ -55,7 +58,7 @@ describe("[UseCase] - Create Session", () => {
   });
 
   it("should not be to create a new session if wrong password", async () => {
-    const result = await createSession.execute({
+    const result = await authenticateUser.execute({
       email: createdUser.password,
       password: createPasswordFactory(),
     });

@@ -8,15 +8,15 @@ import { IRequest, IResponse } from "@/shared/interfaces/http";
 import { BaseController } from "@/shared/infra/http/controllers/base-controller";
 
 // Use Cases
-import { CreateSession } from "@/modules/users/use-cases/create-session";
+import { AuthenticateUser } from "@/modules/users/use-cases/authenticate-user";
 
 export class SessionController {
   public async create(req: IRequest, res: IResponse): Promise<IResponse> {
     const { email, password } = req.body;
 
-    const createSession = container.resolve(CreateSession);
+    const authenticateUser = container.resolve(AuthenticateUser);
 
-    const result = await createSession.execute({
+    const result = await authenticateUser.execute({
       email,
       password,
     });
