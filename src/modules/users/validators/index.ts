@@ -1,15 +1,10 @@
 // Interfaces
 import { ISchema } from "@/shared/interfaces/schemas";
 
+// Validators
+import { email, password } from "@/shared/validators";
+
 export const createUserValidatorSchema: ISchema = {
-  email: {
-    required: true,
-    max: 255,
-    regex: {
-      value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-      message: "Enter a valid email.",
-    },
-  },
   name: {
     required: true,
     max: 255,
@@ -19,9 +14,11 @@ export const createUserValidatorSchema: ISchema = {
       message: "Enter a valid name.",
     },
   },
-  password: {
-    required: true,
-    min: 6,
-    max: 255,
-  },
+  ...email,
+  ...password,
+};
+
+export const authenticateUserValidatorSchema: ISchema = {
+  ...email,
+  ...password,
 };
