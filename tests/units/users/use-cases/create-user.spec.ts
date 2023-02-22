@@ -32,7 +32,7 @@ describe("[UseCase] - Create User", () => {
 
     const result = await createUser.execute(USER_1);
 
-    expect(result.isRight()).toEqual(true);
+    expect(result.isRight()).toBeTruthy();
     expect(result.value).toHaveProperty("id_user");
     expect(result.value).toHaveProperty("email");
   });
@@ -48,7 +48,7 @@ describe("[UseCase] - Create User", () => {
       email: USER_1.email,
     });
 
-    expect(result.isLeft()).toEqual(true);
+    expect(result.isLeft()).toBeTruthy();
     expect(result.value).toBeInstanceOf(UsedEmail);
   });
 });

@@ -44,7 +44,7 @@ describe("[UseCase] - Create Session", () => {
       password: createdUser.password,
     });
 
-    expect(result.isRight()).toBe(true);
+    expect(result.isRight()).toBeTruthy();
     expect(result.value).toBeTypeOf("string");
   });
 
