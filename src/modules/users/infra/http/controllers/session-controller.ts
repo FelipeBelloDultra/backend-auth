@@ -21,6 +21,14 @@ export class SessionController {
       password,
     });
 
+    if (result.isLeft()) {
+      return BaseController.responseWithError(res, {
+        errors: result.value.errors,
+        message: result.value.message,
+        statusCode: result.value.statusCode,
+      });
+    }
+
     return BaseController.responseWithJSON(res, {
       data: result,
       statusCode: 200,
