@@ -54,7 +54,7 @@ export class AuthenticateUser {
       {
         name: findedUserByEmail?.name,
         email: findedUserByEmail?.email,
-        username: findedUserByEmail?.username,
+        username: findedUserByEmail?.username || null,
       },
       secret,
       {
