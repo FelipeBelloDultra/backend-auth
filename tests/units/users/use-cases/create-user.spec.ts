@@ -16,9 +16,10 @@ import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
 import { createUserFactory } from "../../../factories";
 
 describe("[UseCase] - Create User", () => {
-  let createUser: CreateUser;
   let fakeUserRepository: FakeUserRepository;
   let fakeHashProvider: FakeHashProvider;
+
+  let createUser: CreateUser;
 
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();

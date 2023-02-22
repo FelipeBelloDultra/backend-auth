@@ -3,7 +3,6 @@ import "reflect-metadata";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 // Use cases
-import { CreateUser } from "@/modules/users/use-cases/create-user";
 import { AuthenticateUser } from "@/modules/users/use-cases/authenticate-user";
 
 // Fakes
@@ -17,13 +16,11 @@ import {
   createPasswordFactory,
 } from "../../../factories";
 
-describe("[UseCase] - Create Session", () => {
+describe("[UseCase] - Authenticated User", () => {
   const createdUser = createUserFactory();
 
   const fakeUserRepository = new FakeUserRepository();
   const fakeHashProvider = new FakeHashProvider();
-
-  const createUser = new CreateUser(fakeUserRepository, fakeHashProvider);
 
   let authenticateUser: AuthenticateUser;
 
@@ -35,7 +32,7 @@ describe("[UseCase] - Create Session", () => {
   });
 
   beforeAll(async () => {
-    await createUser.execute(createdUser);
+    await fakeUserRepository.create(createdUser);
   });
 
   it("should be able to create a new session", async () => {
