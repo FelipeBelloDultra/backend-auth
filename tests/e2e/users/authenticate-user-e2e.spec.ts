@@ -1,12 +1,9 @@
 // Packages
 import supertest from "supertest";
-import { describe, expect, it, afterAll, beforeAll } from "vitest";
+import { describe, expect, it, beforeAll } from "vitest";
 
 // Http
 import { app } from "@/shared/infra/http/app";
-
-// Database
-import { prisma } from "@/shared/infra/database";
 
 // Factories
 import {
@@ -99,8 +96,4 @@ describe("[POST] - Create session", () => {
     expect(response.status).toBe(401);
     expect(response.body).toHaveProperty("error");
   });
-});
-
-afterAll(async () => {
-  await prisma.user.deleteMany();
 });

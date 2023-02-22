@@ -1,12 +1,9 @@
 // Packages
 import supertest from "supertest";
-import { describe, expect, it, afterAll } from "vitest";
+import { describe, expect, it } from "vitest";
 
 // Http
 import { app } from "@/shared/infra/http/app";
-
-// Database
-import { prisma } from "@/shared/infra/database";
 
 // Factories
 import { createUserFactory, createEmailFactory } from "../../factories";
@@ -55,8 +52,4 @@ describe("[POST] - Create user", () => {
     expect(body.error.errors).toHaveProperty("password");
     expect(body.error.errors).not.toHaveProperty("email");
   });
-});
-
-afterAll(async () => {
-  await prisma.user.deleteMany();
 });

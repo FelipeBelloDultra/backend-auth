@@ -8,6 +8,8 @@ export default defineConfig({
       "@": resolve(__dirname, "src"),
     },
 
+    globalSetup: ["./tests/mocks/setup.ts"],
+
     coverage: {
       all: true,
       include: ["src/modules/**/use-cases/**"],
