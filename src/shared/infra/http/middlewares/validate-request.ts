@@ -43,6 +43,13 @@ export class ValidateRequest {
           ];
         }
 
+        if (schemaItem.compare && body[schemaItem.compare] !== bodyValue) {
+          errors[schemaKey] = [
+            ...(errors[schemaKey] || []),
+            `${schemaKey} must be equal ${schemaItem.compare}.`,
+          ];
+        }
+
         if (
           schemaItem.regex &&
           !new RegExp(schemaItem.regex.value).test(bodyValue)

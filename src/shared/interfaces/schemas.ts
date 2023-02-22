@@ -2,6 +2,7 @@ export interface IValidationSchemaValues {
   required?: boolean | string;
   min?: number;
   max?: number;
+  compare?: keyof ISchema;
   regex?: {
     value: RegExp;
     message: string;
