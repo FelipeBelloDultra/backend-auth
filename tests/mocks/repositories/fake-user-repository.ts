@@ -32,4 +32,10 @@ export class FakeUserRepository implements IUserRepository {
 
     return findedUserByEmail;
   }
+
+  public async findById(id: string): Promise<IUserEntity | undefined> {
+    const findedUserById = this.users.find((user) => user.id_user === id);
+
+    return findedUserById;
+  }
 }
