@@ -36,4 +36,8 @@ export class SessionController {
       statusCode: 200,
     });
   }
+
+  public async index(req: IRequest, res: IResponse): Promise<IResponse> {
+    return BaseController.responseCreated(res);
+  }
 }
