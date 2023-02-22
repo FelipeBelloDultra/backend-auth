@@ -11,8 +11,12 @@ export class HashProvider implements IHashProvider {
 
   public async compareHash(
     hashedPassword: string,
-    password: string
+    password?: string
   ): Promise<boolean> {
+    if (!password) {
+      return false;
+    }
+
     return compare(password, hashedPassword);
   }
 }

@@ -1,5 +1,5 @@
 // Interfaces
-import { IHashProvider } from "@/shared/container/providers/hash-provider";
+import { IHashProvider } from "@/shared/providers/hash-provider";
 
 export class FakeHashProvider implements IHashProvider {
   public async encodePassword(password: string): Promise<string> {
@@ -10,8 +10,12 @@ export class FakeHashProvider implements IHashProvider {
 
   public async compareHash(
     hashedPassword: string,
-    password: string
+    password?: string
   ): Promise<boolean> {
+    if (!password) {
+      return false;
+    }
+
     const savedPassword = hashedPassword.split("-|>");
 
     return savedPassword[0] === password;

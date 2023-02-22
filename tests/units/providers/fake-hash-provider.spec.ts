@@ -29,4 +29,12 @@ describe("[Provider] - FakeHashProvider", () => {
 
     expect(passwordIsEqual).toBeTruthy();
   });
+
+  it("should not be able to compare password if the password is empty", async () => {
+    const hashedPassword = await fakeHashProvider.encodePassword("PASSWORD");
+
+    const passwordIsEqual = await fakeHashProvider.compareHash(hashedPassword);
+
+    expect(passwordIsEqual).toBeFalsy();
+  });
 });
