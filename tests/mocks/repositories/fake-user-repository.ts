@@ -54,11 +54,11 @@ export class FakeUserRepository implements IUserRepository {
   }
 
   public async update(
-    { id_user, email }: ISelectUserToUpdate,
+    { id_user }: ISelectUserToUpdate,
     data: IUpdateUserDTO
   ): Promise<IUserEntity> {
     this.users.forEach((user) => {
-      if (user.id_user === id_user && user.email === email) {
+      if (user.id_user === id_user) {
         return {
           ...data,
         };
