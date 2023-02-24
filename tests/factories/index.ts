@@ -4,18 +4,30 @@ import { faker } from "@faker-js/faker";
 // Entities
 import { ICreateUserDTO } from "@/modules/users/dtos/create-user-dto";
 
-export function createEmailFactory(): string {
-  return faker.internet.email();
+class FakeUser {
+  public createEmailFactory(): string {
+    return faker.internet.email();
+  }
+
+  public createPasswordFactory(): string {
+    return faker.internet.password();
+  }
+
+  public createFullNameFactory(): string {
+    return faker.name.fullName();
+  }
+
+  public createUserFactory(): ICreateUserDTO {
+    return {
+      name: this.createFullNameFactory(),
+      email: this.createEmailFactory(),
+      password: this.createPasswordFactory(),
+    };
+  }
+
+  public createUserNameFactory(): string {
+    return this.createFullNameFactory().split(" ")[0].toLowerCase();
+  }
 }
 
-export function createPasswordFactory(): string {
-  return faker.internet.password();
-}
-
-export function createUserFactory(): ICreateUserDTO {
-  return {
-    name: faker.name.fullName(),
-    email: createEmailFactory(),
-    password: createPasswordFactory(),
-  };
-}
+export const fakeUser = new FakeUser();

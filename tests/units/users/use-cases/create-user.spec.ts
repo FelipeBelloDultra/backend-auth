@@ -13,7 +13,7 @@ import { FakeUserRepository } from "../../../mocks/repositories/fake-user-reposi
 import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
 
 // Factories
-import { createUserFactory } from "../../../factories";
+import { fakeUser } from "../../../factories";
 
 describe("[UseCase] - Create User", () => {
   let fakeUserRepository: FakeUserRepository;
@@ -29,7 +29,7 @@ describe("[UseCase] - Create User", () => {
   });
 
   it("should be able to create a new user", async () => {
-    const USER_1 = createUserFactory();
+    const USER_1 = fakeUser.createUserFactory();
 
     const result = await createUser.execute(USER_1);
 
@@ -39,8 +39,8 @@ describe("[UseCase] - Create User", () => {
   });
 
   it("should not be able to create a new user if the email already exists", async () => {
-    const USER_1 = createUserFactory();
-    const USER_2 = createUserFactory();
+    const USER_1 = fakeUser.createUserFactory();
+    const USER_2 = fakeUser.createUserFactory();
 
     await fakeUserRepository.create(USER_1);
 

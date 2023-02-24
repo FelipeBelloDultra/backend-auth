@@ -6,16 +6,12 @@ import { describe, expect, it, beforeAll } from "vitest";
 import { app } from "@/shared/infra/http/app";
 
 // Factories
-import {
-  createUserFactory,
-  createEmailFactory,
-  createPasswordFactory,
-} from "../../factories";
+import { fakeUser } from "../../factories";
 
 const BASE_URL = "/api/session";
 
 describe("[POST] - Create session", () => {
-  const createdUser = createUserFactory();
+  const createdUser = fakeUser.createUserFactory();
 
   beforeAll(async () => {
     await supertest(app).post("/api/user").send(createdUser);
@@ -35,7 +31,7 @@ describe("[POST] - Create session", () => {
   it("[/session] - should not be able to create an session with wrong email", async () => {
     const response = await supertest(app).post(BASE_URL).send({
       password: createdUser.password,
-      email: createEmailFactory(),
+      email: fakeUser.createEmailFactory(),
     });
 
     expect(response.status).toBe(401);
@@ -45,7 +41,7 @@ describe("[POST] - Create session", () => {
   it("[/session] - should not be able to create an session with wrong password", async () => {
     const response = await supertest(app).post(BASE_URL).send({
       email: createdUser.email,
-      password: createPasswordFactory(),
+      password: fakeUser.createPasswordFactory(),
     });
 
     expect(response.status).toBe(401);

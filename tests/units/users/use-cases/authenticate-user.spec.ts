@@ -10,14 +10,10 @@ import { FakeUserRepository } from "../../../mocks/repositories/fake-user-reposi
 import { FakeHashProvider } from "../../../mocks/providers/fake-hash-provider";
 
 // Factories
-import {
-  createUserFactory,
-  createEmailFactory,
-  createPasswordFactory,
-} from "../../../factories";
+import { fakeUser } from "../../../factories";
 
 describe("[UseCase] - Authenticated User", () => {
-  const createdUser = createUserFactory();
+  const createdUser = fakeUser.createUserFactory();
 
   const fakeUserRepository = new FakeUserRepository();
   const fakeHashProvider = new FakeHashProvider();
@@ -47,7 +43,7 @@ describe("[UseCase] - Authenticated User", () => {
 
   it("should not be to create a new session if wrong email", async () => {
     const result = await authenticateUser.execute({
-      email: createEmailFactory(),
+      email: fakeUser.createEmailFactory(),
       password: createdUser.password,
     });
 
@@ -57,7 +53,7 @@ describe("[UseCase] - Authenticated User", () => {
   it("should not be to create a new session if wrong password", async () => {
     const result = await authenticateUser.execute({
       email: createdUser.password,
-      password: createPasswordFactory(),
+      password: fakeUser.createPasswordFactory(),
     });
 
     expect(result.isLeft()).toBeTruthy();

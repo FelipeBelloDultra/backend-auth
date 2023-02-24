@@ -6,13 +6,13 @@ import { describe, expect, it } from "vitest";
 import { app } from "@/shared/infra/http/app";
 
 // Factories
-import { createUserFactory, createEmailFactory } from "../../factories";
+import { fakeUser } from "../../factories";
 
 const BASE_URL = "/api/user";
 
 describe("[POST] - Create user", () => {
   it("[/user] - should be able to create a new user", async () => {
-    const createFirstUser = createUserFactory();
+    const createFirstUser = fakeUser.createUserFactory();
 
     const response = await supertest(app).post(BASE_URL).send(createFirstUser);
 
@@ -22,8 +22,8 @@ describe("[POST] - Create user", () => {
   });
 
   it("[/user] - should not be able to create a new user with same email", async () => {
-    const createFirstUser = createUserFactory();
-    const createSecondUser = createUserFactory();
+    const createFirstUser = fakeUser.createUserFactory();
+    const createSecondUser = fakeUser.createUserFactory();
 
     await supertest(app).post(BASE_URL).send(createFirstUser);
 
@@ -42,7 +42,7 @@ describe("[POST] - Create user", () => {
   it("[/user] - should not be able to create a new user with invalid fields", async () => {
     const { status, body } = await supertest(app).post(BASE_URL).send({
       name: "",
-      email: createEmailFactory(),
+      email: fakeUser.createEmailFactory(),
       password: "",
     });
 

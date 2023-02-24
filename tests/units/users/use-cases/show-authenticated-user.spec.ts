@@ -9,7 +9,7 @@ import { ShowAuthenticatedUser } from "@/modules/users/use-cases/show-authentica
 import { FakeUserRepository } from "../../../mocks/repositories/fake-user-repository";
 
 // Factories
-import { createUserFactory } from "../../../factories";
+import { fakeUser } from "../../../factories";
 
 describe("[UseCase] - Show Authenticated User", () => {
   let fakeUserRepository: FakeUserRepository;
@@ -23,7 +23,9 @@ describe("[UseCase] - Show Authenticated User", () => {
   });
 
   it("should be able to see the logged user", async () => {
-    const createdUser = await fakeUserRepository.create(createUserFactory());
+    const createdUser = await fakeUserRepository.create(
+      fakeUser.createUserFactory()
+    );
 
     const result = await showAuthenticatedUser.execute({
       id_user: createdUser.id_user,
