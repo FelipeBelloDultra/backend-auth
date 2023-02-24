@@ -5,10 +5,14 @@ import { prisma } from "@/shared/infra/database";
 import { IUserEntity } from "@/modules/users/entities/user-entity";
 
 // Interfaces
-import { IUserRepository } from "@/modules/users/repositories/user-repository";
+import {
+  IUserRepository,
+  ISelectUserToUpdate,
+} from "@/modules/users/repositories/user-repository";
 
 // DTO's
 import { ICreateUserDTO } from "@/modules/users/dtos/create-user-dto";
+import { IUpdateUserDTO } from "@/modules/users/dtos/update-user-dto";
 
 export class UserRepository implements IUserRepository {
   public async create(data: ICreateUserDTO): Promise<IUserEntity> {
@@ -49,5 +53,20 @@ export class UserRepository implements IUserRepository {
     });
 
     return findedUserByUsername || undefined;
+  }
+
+  public async update(
+    where: ISelectUserToUpdate,
+    data: IUpdateUserDTO
+  ): Promise<IUserEntity> {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id_user: where.id_user,
+        email: where.email,
+      },
+      data,
+    });
+
+    return updatedUser;
   }
 }

@@ -2,13 +2,17 @@
 import { randomUUID } from "node:crypto";
 
 // Interfaces
-import { IUserRepository } from "@/modules/users/repositories/user-repository";
+import {
+  IUserRepository,
+  ISelectUserToUpdate,
+} from "@/modules/users/repositories/user-repository";
 
 // Entities
 import { IUserEntity } from "@/modules/users/entities/user-entity";
 
 // DTO's
 import { ICreateUserDTO } from "@/modules/users/dtos/create-user-dto";
+import { IUpdateUserDTO } from "@/modules/users/dtos/update-user-dto";
 
 export class FakeUserRepository implements IUserRepository {
   private users: IUserEntity[] = [];
@@ -47,5 +51,24 @@ export class FakeUserRepository implements IUserRepository {
     );
 
     return findedUserByUsername;
+  }
+
+  public async update(
+    { id_user, email }: ISelectUserToUpdate,
+    data: IUpdateUserDTO
+  ): Promise<IUserEntity> {
+    this.users.forEach((user) => {
+      if (user.id_user === id_user && user.email === email) {
+        return {
+          ...data,
+        };
+      }
+
+      return user;
+    });
+
+    const findedUserById = await this.findById(id_user);
+
+    return findedUserById || this.create(data);
   }
 }
