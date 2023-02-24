@@ -38,4 +38,16 @@ export class UserRepository implements IUserRepository {
 
     return findedUserById || undefined;
   }
+
+  public async findByUsername(
+    username: string
+  ): Promise<IUserEntity | undefined> {
+    const findedUserByUsername = await prisma.user.findUnique({
+      where: {
+        username,
+      },
+    });
+
+    return findedUserByUsername || undefined;
+  }
 }

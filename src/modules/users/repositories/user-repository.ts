@@ -8,4 +8,5 @@ export interface IUserRepository {
   create: (data: ICreateUserDTO) => Promise<IUserEntity>;
   findByEmail: (email: string) => Promise<IUserEntity | undefined>;
   findById: (id: string) => Promise<IUserEntity | undefined>;
+  findByUsername: (username: string) => Promise<IUserEntity | undefined>;
 }
