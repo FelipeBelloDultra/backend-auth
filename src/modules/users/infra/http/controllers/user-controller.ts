@@ -32,4 +32,19 @@ export class UserController {
 
     return BaseController.responseCreated(res);
   }
+
+  public async update(req: IRequest, res: IResponse): Promise<IResponse> {
+    const { name, email, password, username } = req.body;
+    const { id_user } = req.user;
+
+    return BaseController.responseWithJSON(res, {
+      data: {
+        id_user,
+        name,
+        email,
+        password,
+        username,
+      },
+    });
+  }
 }
