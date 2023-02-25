@@ -57,18 +57,22 @@ export class FakeUserRepository implements IUserRepository {
     { id_user }: ISelectUserToUpdate,
     data: IUpdateUserDTO
   ): Promise<IUserEntity> {
-    this.users.forEach((user) => {
-      if (user.id_user === id_user) {
-        return {
-          ...data,
-        };
-      }
+    const findedByIndex = this.users.findIndex(
+      (user) => user.id_user === id_user
+    );
 
-      return user;
-    });
+    const updatedUser = {
+      id_user,
+      name: data.name,
+      email: data.email,
+      username: data.username,
+      password: data.password,
+      created_at: this.users[findedByIndex].created_at,
+      updated_at: new Date(),
+    };
 
-    const findedUserById = await this.findById(id_user);
+    this.users[findedByIndex] = updatedUser;
 
-    return findedUserById || this.create(data);
+    return this.users[findedByIndex];
   }
 }
