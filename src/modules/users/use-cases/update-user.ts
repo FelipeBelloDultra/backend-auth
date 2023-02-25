@@ -13,6 +13,8 @@ import { IUserEntity } from "../entities/user-entity";
 // Errors
 import { Either, left, right } from "@/shared/errors/either";
 import { UserNotFound } from "../errors/user-not-found";
+import { UsedEmail } from "../errors/used-email";
+import { UsedUsername } from "../errors/used-username";
 
 interface IUpdateUserRequest {
   name: string;
@@ -21,7 +23,7 @@ interface IUpdateUserRequest {
   password: string;
 }
 
-type Response = Either<UserNotFound, IUserEntity>;
+type Response = Either<UserNotFound | UsedEmail | UsedUsername, IUserEntity>;
 
 @injectable()
 export class UpdateUser {
@@ -36,12 +38,22 @@ export class UpdateUser {
   ): Promise<Response> {
     const findedUserById = await this.userRepository.findById(where.id_user);
 
-    if (
-      !findedUserById ||
-      findedUserById.id_user !== where.id_user ||
-      findedUserById.email !== where.email
-    ) {
+    if (!findedUserById || findedUserById.email !== where.email) {
       return left(new UserNotFound());
+    }
+
+    const findedUserByEmail = await this.userRepository.findByEmail(data.email);
+
+    if (findedUserByEmail && findedUserByEmail.id_user !== where.id_user) {
+      return left(new UsedEmail());
+    }
+
+    const findedUserByUsername = await this.userRepository.findByUsername(
+      data.username
+    );
+
+    if (findedUserByUsername) {
+      return left(new UsedUsername());
     }
 
     const updatedUser = await this.userRepository.update(

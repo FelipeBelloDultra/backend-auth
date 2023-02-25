@@ -33,9 +33,12 @@ describe("[UseCase] - Create User", () => {
 
     const result = await createUser.execute(USER_1);
 
-    expect(result.isRight()).toBeTruthy();
-    expect(result.value).toHaveProperty("id_user");
-    expect(result.value).toHaveProperty("email");
+    if (result.isRight()) {
+      expect(result.value).toHaveProperty("id_user", result.value.id_user);
+      expect(result.value).toHaveProperty("email", result.value.email);
+    } else {
+      expect(result.isRight()).toBeTruthy();
+    }
   });
 
   it("should not be able to create a new user if the email already exists", async () => {
