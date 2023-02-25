@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsup src",
+    "start": "node ./dist/server.js",
     "dev": "tsx src/server.ts",
     "dev:watch": "tsx watch src/server.ts",
     "test": "vitest",
